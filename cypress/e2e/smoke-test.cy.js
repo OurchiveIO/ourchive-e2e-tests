@@ -1,6 +1,6 @@
 describe('Anon User Browsing', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:8000/')
+    cy.visit('/')
   })
 
   it('visits the homepage and browses works', () => {
@@ -42,12 +42,21 @@ describe('Anon User Browsing', () => {
 
     cy.get('#nav-search-input')
       .should('be.visible')
-      .type('untitled')
+      .type(Cypress.env('searchTerm'))
 
     cy.get('[data-testid="navbar-search-submit"]')
       .should('be.visible')
-      .click()
+      .click({force: true})
 
     cy.get('[data-testid="work-tile-title"]').first().should('exist')
+
+    cy.get('[data-testid="result-filter-pane"]').should('exist')
+
+    cy.get(`[data-testid="include-facet-child-label-${Cypress.env('facetFilter')}"]`).should('exist').click()
+
+    cy.get('[data-testid="search-facet-form-submit"]').click()
+
+    cy.get('[data-testid="work-tile-title"]').first().should('exist')
+
   })
 })
