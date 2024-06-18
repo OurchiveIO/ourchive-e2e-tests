@@ -40,13 +40,9 @@ describe('Anon User Browsing', () => {
 
   it('executes a search', () => {
 
-    cy.get('#nav-search-input')
-      .should('be.visible')
-      .type(Cypress.env('searchTerm'))
+    cy.get('#nav-search-input').should('be.visible').type(Cypress.env('searchTerm'))
 
-    cy.get('[data-testid="navbar-search-submit"]')
-      .should('be.visible')
-      .click({force: true})
+    cy.get('[data-testid="navbar-search-submit"]').should('be.visible').click({force: true})
 
     cy.get('[data-testid="work-tile-title"]').first().should('exist')
 
@@ -57,6 +53,22 @@ describe('Anon User Browsing', () => {
     cy.get('[data-testid="search-facet-form-submit"]').click()
 
     cy.get('[data-testid="work-tile-title"]').first().should('exist')
+
+    cy.get('#search-results-sort-select-visible').select('-comment_count')
+
+    cy.get('[data-testid="work-tile-title"]').first().should('exist')
+
+    cy.get('#search-results-sort-select-visible').select('-fingerguns', {force: true})
+
+    cy.get('[data-testid="work-tile-title"]').first().should('exist')
+
+    cy.get('#accordion-item-1').click()
+
+    cy.get('.multi-select-component').first().should('exist')
+
+    cy.get('[data-testid="include-multiselect"]').first().should('exist').select(0, {force: true})
+
+    cy.get('[data-testid="search-facet-form-submit"]').click()
 
   })
 })
