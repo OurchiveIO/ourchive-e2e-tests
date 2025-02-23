@@ -40,3 +40,7 @@ Cypress.Commands.add('login', (username, password) => {
   // UI should reflect this user being logged in
   cy.get('#nav-username').should('exist')
 })
+
+Cypress.Commands.add('destroyTestData', (ourchivePath, venvFolder) => {
+  cy.exec(`cd ${ourchivePath} && source ${venvFolder}/bin/activate && cd ourchive_app && python manage.py deleteintegrationtestdata --settings=ourchive_app.settings.integration && deactivate`)
+})
