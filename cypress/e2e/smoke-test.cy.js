@@ -25,20 +25,20 @@ describe('Anon User Browsing', () => {
           cy.visit(`/username/${Cypress.env('smokeTestUser')}`)
 
           // collection
-          cy.get('[id="user_collections_selector"]').click()
+          cy.get('[id="collections-tab"]').click()
 
-          cy.get('[id^=bkcol-tile-card-]').first().should('exist')
+          cy.get('[data-testid="collection-tile"]').first().should('exist')
 
           // series
-          cy.get('[id="user_series_selector"]').click()
+          cy.get('[id="series-tab"]').click()
 
-          cy.get('[data-testid="series-card-title"]').first().should('exist')
+          cy.get('[data-testid="series-tile"]').first().should('exist')
 
           // anthologies
 
-          cy.get('[id="user_anthologies_selector"]').click()
+          cy.get('[id="anthologies-tab"]').click()
 
-          cy.get('[data-testid="anthology-card-title"]').first().should('exist')
+          cy.get('[data-testid="anthology-tile"]').first().should('exist')
     }
 
   })
