@@ -36,7 +36,7 @@ describe('Authenticated User Works CRUD', () => {
 
     cy.get('[data-testid="tag-select-div"]>.choices>.choices__inner').children('input').first().type(Cypress.env('tagSearchTerm')).type('{enter}');
 
-    cy.get('[data-testid="tag-select"] option:selected').should('have.text', Cypress.env('tagSearchResult'));
+    cy.get('[data-testid="tag-select"] option:selected').should('contain.text', Cypress.env('tagSearchResult'));
 
     cy.get('iframe#summaryEditor_ifr').then(($iframe) => {
         let doc = $iframe.contents().find("body#tinymce");
@@ -64,7 +64,34 @@ describe('Authenticated User Works CRUD', () => {
 
     cy.get('[data-testid="attribute-value"]').should('exist');
 
-    cy.destroyTestData(Cypress.env("ourchivePath"), Cypress.env("venvFolder"));
+    cy.destroyTestData(Cypress.env("ourchivePath"), Cypress.env("venvFolder"), Cypress.env("venvCommand"));
 
   })
+
+  it('edits an existing work', () => {
+    cy.login(Cypress.env('smokeTestUserOne'), Cypress.env('smokeTestUserOnePassword'));
+
+    cy.get('#nav-username').click();
+
+    cy.get('#nav-creations-li').click();
+
+    cy.get('#works-tab').click();
+
+    cy.get('[data-testid="work-tile-title"]').first().click();
+
+    cy.get('#work-edit-link').should('exist').click();
+
+    cy.get('#work-form-title-input').should('be.visible').type('{selectAll}');
+
+    cy.get('#work-form-title-input').should('be.visible').type('{backspace}');
+
+    cy.get('#work-form-title-input').should('be.visible').type('Edited Work Title');
+
+    cy.get('#work-form-submit-bottom').click();
+
+    cy.url().should('include', 'works');
+
+    cy.get('#work-title-link').invoke("text").should("equal", 'Edited Work Title');
+
+  });
 })

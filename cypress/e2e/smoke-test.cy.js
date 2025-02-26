@@ -41,6 +41,12 @@ describe('Anon User Browsing', () => {
           cy.get('[data-testid="anthology-tile"]').first().should('exist')
     }
 
+    cy.get('#works-tab').click();
+
+    cy.get('[data-testid="tag-value"]').first().should('exist').click();
+
+    cy.get('#search-accordion').should('exist');
+
   })
 
   it('executes a search', () => {
