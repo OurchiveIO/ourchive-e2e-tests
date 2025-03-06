@@ -1,4 +1,4 @@
-describe('Authenticated User Works CRUD', () => {
+describe('Authenticated User Collections CRUD', () => {
   beforeEach(() => {
     cy.visit('/')
   })

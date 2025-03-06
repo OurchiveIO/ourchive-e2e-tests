@@ -1,4 +1,4 @@
-describe('Authenticated User Works CRUD', () => {
+describe('Authenticated User Anthologies CRUD', () => {
 
   after(() => {
     cy.destroyTestData(Cypress.env("ourchivePath"), Cypress.env("venvFolder"), Cypress.env("venvCommand"));

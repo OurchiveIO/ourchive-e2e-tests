@@ -94,4 +94,67 @@ describe('Authenticated User Works CRUD', () => {
     cy.get('#work-title-link').invoke("text").should("equal", 'Edited Work Title');
 
   });
+
+  it('edits an existing work to make it a draft', () => {
+    cy.login(Cypress.env('smokeTestUserOne'), Cypress.env('smokeTestUserOnePassword'));
+
+    cy.get('#nav-username').click();
+
+    cy.get('#nav-creations-li').click();
+
+    cy.get('#works-tab').click();
+
+    cy.get('[data-testid="work-tile-title"]').first().click();
+
+    cy.get('#work-edit-link').should('exist').click();
+
+    cy.get('#work-form-draft-checkbox').check();
+
+    cy.get('#work-form-submit-bottom').click();
+
+    cy.url().should('include', 'works');
+
+    cy.get('#work-draft-span').should("be.visible");
+
+    cy.get('#chapter-edit-link').should('exist').click();
+
+    cy.get('#chapter-form-draft').check();
+
+    cy.get('#chapter-form-submit-button-bottom').click();
+
+    cy.get('#chapter-draft-badge').should("be.visible");
+
+    cy.get('#chapter-edit-link').should('exist').click();
+
+    cy.get('#chapter-form-draft').uncheck();
+
+    cy.get('#chapter-form-submit-button-bottom').click();
+
+    cy.get('#chapter-draft-badge').should("not.exist");
+
+    cy.get('#work-edit-link').should('exist').click();
+
+    cy.get('#work-form-draft-checkbox').check();
+
+    cy.get('#work-form-submit-bottom').click();
+
+    cy.url().should('include', 'works');
+
+    cy.get('#work-draft-span').should("be.visible");
+
+    cy.get('#chapter-edit-link').should('exist').click();
+
+    cy.get('#chapter-form-draft').check();
+
+    cy.get('#chapter-form-submit-button-bottom').click();
+
+    cy.get('#chapter-draft-badge').should("be.visible");
+
+    cy.get('#work-publish-all-link').should('exist').click();
+
+    cy.get('#work-draft-span').should("not.exist");
+
+    cy.get('#chapter-draft-badge').should("not.exist");
+
+  });
 })
